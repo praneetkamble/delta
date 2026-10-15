@@ -25,7 +25,7 @@ Full steps, options and troubleshooting are in [Install on Windows](#install-on-
 
 ![Delta OS dashboard (demo mode: the mock adapter's simulated values)](docs/dashboard-desktop.png)
 
-> **Status: v0.1, built and tested on Linux with a mock adapter, NOT yet run on a real Windows PC.**
+> **Status: v0.1. Built and tested on Linux with a mock adapter (693 automated tests). On one real Windows 11 PC the Windows self-test passes and the Groq-backed chat works. Hardware controls (volume, brightness, lock, sleep, shutdown, media keys), voice and hotkeys are still unproven on real Windows.**
 > See [What was tested, and what was not](#what-was-tested-and-what-was-not). Please read it before relying on Delta.
 
 ---
