@@ -1,0 +1,81 @@
+# Delta configuration. Copy to config.yaml (install.ps1 does this for you) and edit.
+# Anything you leave out uses the built-in default.
+
+user_name: Praneet
+data_dir: ~/.delta            # database, audit log, reminders live here
+adapter: auto                 # auto = Windows adapter on Windows, mock elsewhere | windows | mock
+search_engine: google         # google | duckduckgo | bing
+
+server:
+  port: 8765                  # the UI only ever listens on 127.0.0.1
+  open_browser: true
+
+# ---- Brain -----------------------------------------------------------------------------------
+brain:
+  mode: auto                  # auto = rule-based commands first, LLM for everything else | rules = never use an LLM
+
+llm:                          # any OpenAI-compatible endpoint. Leave base_url empty to run rules-only (fully offline).
+  base_url: ""                # Ollama:  http://localhost:11434/v1     OpenAI: https://api.openai.com/v1
+                              # Groq:    https://api.groq.com/openai/v1
+  model: ""                   # e.g. llama3.1:8b (Ollama) / gpt-4o-mini (OpenAI) / llama-3.3-70b-versatile (Groq)
+  api_key_env: DELTA_LLM_API_KEY   # NAME of the environment variable holding the key. Never write the key in this file.
+  timeout_s: 60
+  max_steps: 6
+
+# ---- Safety ----------------------------------------------------------------------------------
+safety:
+  dry_run: false              # true = describe every action, run none (also: delta --dry-run)
+  confirm_timeout_s: 120      # an unanswered approval request expires after this long
+  redact_secrets: true        # strip key/password-looking text from audit logs and from text sent to the LLM
+  kill_switch_hotkey: ctrl+alt+shift+k
+  allowed_folders:            # file tools can ONLY touch these (and their sub-folders)
+    - ~/Desktop
+    - ~/Documents
+    - ~/Downloads
+    - ~/Pictures
+    - ~/Music
+    - ~/Videos
+  overrides: {}               # change a tool's level. Examples:
+                              #   close_app: safe        (stop asking before closing apps)
+                              #   lock_screen: blocked   (never allow it)
+                              # Tools marked "always asks" (shutdown, restart, delete, kill) can't be lowered; non-whitelisted shell commands always ask.
+  blocked_tools: []           # tools that must never run, e.g. [run_command, kill_process]
+  shell_whitelist:            # commands that run without asking ("*" is a wildcard). Everything else asks first.
+    - ipconfig
+    - ipconfig /all
+    - hostname
+    - whoami
+    - tasklist
+    - git status
+    - git log --oneline -n 10
+    - ping -n 4 *
+
+scripts: {}                   # scripts you trust, runnable by name ("run script backup"):
+                              #   backup: C:/Users/you/scripts/backup.bat
+
+apps: {}                      # extra app names: obsidian: C:/Users/you/AppData/Local/Obsidian/Obsidian.exe
+
+routines_file: routines.yaml  # see routines.example.yaml
+
+# ---- Vibe Coding (dashboard -> Vibe Coding): an AI coding agent that edits project files you review first -------------
+# The projects folder MUST be inside safety.allowed_folders above (add it there too), or Vibe Coding refuses to start.
+# Needs git for the safety snapshot / Undo. Node.js (React/Express previews) and VS Code are optional.
+vibe:
+  projects_root: ""           # "" = D:/Vibe on Windows, ~/DeltaProjects elsewhere
+  use_llm: true               # false = always use the small offline rules mode
+  max_steps: 16               # model tool-calls per run
+  llm_timeout_s: 120
+  command_timeout_s: 180      # per command the agent runs
+  require_git: true           # false = run without a git snapshot (no Undo)
+  python: ""                  # e.g. "py -3.12" (""= find one: py launcher, python3, python)
+  # command_whitelist: [...]  # REPLACES the built-in list of commands that run without asking (see delta/vibe/commands.py); [] = ask for everything
+  # command_blocked_patterns: [...]   # extra regexes that are always refused (added to the built-in ones)
+
+# ---- Voice (optional; needs: install.ps1 -Voice) -----------------------------------------------
+voice:
+  enabled: false
+  hotkey: ctrl+alt+space      # press once, speak, stop talking: Delta transcribes and answers
+  stt_backend: auto           # auto | faster-whisper (offline) | google (online)
+  whisper_model: base.en
+  speak_replies: true
+  max_record_s: 15

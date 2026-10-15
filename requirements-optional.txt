@@ -1,0 +1,15 @@
+# Optional extras. install.ps1 -Voice / -Ocr install these for you.
+
+# Screen OCR ("read my screen"): also needs the Tesseract program, https://github.com/UB-Mannheim/tesseract/wiki
+pytesseract>=0.3.10
+
+# Brightness on external monitors that support DDC/CI
+screen-brightness-control>=0.20
+
+# Voice: offline speech-to-text (preferred), microphone capture, text-to-speech (Windows SAPI5)
+faster-whisper>=1.0
+sounddevice>=0.4.6
+numpy>=1.24
+pyttsx3>=2.90
+# Online fallback speech recognition (only used if faster-whisper is missing; sends audio to Google)
+SpeechRecognition>=3.10

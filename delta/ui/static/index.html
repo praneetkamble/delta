@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Delta OS</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'%3E%3Crect width='34' height='34' rx='8' fill='%23071016'/%3E%3Cpath d='M17 8.5 26 24H8L17 8.5Z' fill='none' stroke='%234fd6f2' stroke-width='1.8' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preload" href="/assets/Geist.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/dashboard.css">
+<link rel="stylesheet" href="/assets/vibe.css">
+</head>
+<body>
+<div class="bg" aria-hidden="true"><i class="bg-spot"></i><i class="bg-grid"></i><i class="bg-plates"></i><i class="bg-vig"></i><i class="bg-noise"></i></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="glow-s" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <linearGradient id="g-cy" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b9f4ff"/><stop offset="1" stop-color="#2fb8d8"/></linearGradient>
+    <linearGradient id="g-metal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9fb2bb"/><stop offset=".5" stop-color="#3b4a53"/><stop offset="1" stop-color="#6d7f89"/></linearGradient>
+    <linearGradient id="g-tri" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".45" stop-color="#bff3ff"/><stop offset="1" stop-color="#47c6e6" stop-opacity=".85"/></linearGradient>
+  </defs>
+</svg>
+
+<div class="hud" id="hud">
+
+  <!-- ============ left zone ============ -->
+  <section class="zone-left" aria-label="Overview">
+    <div class="panel brand" style="grid-area:brand">
+      <svg class="logo" width="30" height="30" viewBox="0 0 34 34" fill="none" aria-hidden="true"><path d="M17 6 29 27H5L17 6Z" stroke="url(#g-cy)" stroke-width="2.2" stroke-linejoin="round" filter="url(#glow-s)"/><path d="M17 13.5 22.5 23h-11L17 13.5Z" fill="url(#g-cy)" opacity=".9"/></svg>
+      <div><b>DELTA OS</b><small id="ver">PERSONAL AI SYSTEM</small></div>
+    </div>
+
+    <div class="panel greet" style="grid-area:greet" id="greet">
+      <div class="greet-main">
+        <div>
+          <p class="eyebrow" id="g-part">GOOD EVENING,</p>
+          <h1 id="g-name">&nbsp;</h1>
+          <p class="sub">How can I help you today?</p>
+        </div>
+        <div class="avatar" id="g-av" aria-hidden="true"></div>
+      </div>
+      <ul class="brief" id="brief" aria-label="Daily briefing"></ul>
+    </div>
+
+    <nav class="panel nav" style="grid-area:nav" aria-label="Sections"><ul id="nav"></ul></nav>
+
+    <section class="panel recent" style="grid-area:recent" aria-labelledby="h-recent">
+      <h2 class="ph" id="h-recent">Recent files</h2>
+      <ul class="rows" id="recent"></ul>
+      <button class="pbtn" data-view="files">VIEW ALL</button>
+    </section>
+
+    <section class="panel links" style="grid-area:links" aria-labelledby="h-links">
+      <h2 class="ph" id="h-links">Folder access</h2>
+      <ul class="rows tight" id="links"></ul>
+    </section>
+
+    <section class="panel tasks" style="grid-area:tasks" aria-labelledby="h-tasks">
+      <h2 class="ph" id="h-tasks">Today's tasks</h2>
+      <ul class="rows" id="tasks"></ul>
+      <form class="addrow" id="task-add" autocomplete="off"><input id="task-in" type="text" maxlength="300" placeholder="Add a task" aria-label="Add a task"><button type="submit" class="ico" aria-label="Add task"></button></form>
+      <button class="pbtn" data-view="tasks">VIEW SCHEDULE</button>
+    </section>
+
+    <section class="panel sysline" style="grid-area:sys" aria-label="System status"><ul id="sys"></ul></section>
+  </section>
+
+  <!-- ============ centre stage ============ -->
+  <main class="stage" id="stage" aria-label="Delta">
+    <div class="wordmark" aria-hidden="true">DELTA</div>
+    <p class="tagline">LOCAL FIRST &nbsp;·&nbsp; ASKS BEFORE IT ACTS</p>
+
+    <div class="core" id="core" data-state="idle" role="img" aria-label="Delta status indicator">
+      <div class="core-floor"></div>
+      <div class="core-housing"></div>
+      <svg class="core-ticks" viewBox="0 0 400 400" aria-hidden="true"></svg>
+      <div class="core-ring2"></div>
+      <svg class="core-arcs" viewBox="0 0 400 400" aria-hidden="true">
+        <g fill="none" stroke-linecap="round">
+          <circle cx="200" cy="200" r="147" stroke="#6fdcf2" stroke-opacity=".30" stroke-width="1"/>
+          <circle cx="200" cy="200" r="141" stroke="#000" stroke-opacity=".5" stroke-width="5"/>
+          <g class="blocks" fill="url(#g-metal)" stroke="#05090c" stroke-width="1"><rect x="186" y="14" width="28" height="15" rx="2"/><rect x="186" y="371" width="28" height="15" rx="2"/><rect x="14" y="186" width="15" height="28" rx="2"/><rect x="371" y="186" width="15" height="28" rx="2"/></g>
+          <g filter="url(#glow)">
+            <circle class="rim" cx="200" cy="200" r="120" stroke="url(#g-cy)" stroke-width="2.4"/>
+            <path class="arc arc-l" d="M 97.35 286.14 A 134 134 0 0 1 97.35 113.86" stroke="url(#g-cy)" stroke-width="11"/>
+            <path class="arc arc-r" d="M 302.65 113.86 A 134 134 0 0 1 302.65 286.14" stroke="url(#g-cy)" stroke-width="11"/>
+            <circle class="arc-orbit" cx="200" cy="200" r="134" stroke="#9eeeff" stroke-width="1.4" stroke-dasharray="2 9" opacity=".5"/>
+            <circle class="arc-think" cx="200" cy="200" r="158" stroke="#c4f6ff" stroke-width="3" stroke-dasharray="70 920" opacity="0"/>
+          </g>
+        </g>
+      </svg>
+      <div class="core-glass"></div>
+      <svg class="core-emblem" viewBox="0 0 200 200" aria-hidden="true">
+        <g filter="url(#glow)"><path d="M100 36 164 148H36L100 36Z" fill="url(#g-tri)" opacity=".95"/></g>
+        <path d="M100 36 164 148H36L100 36Z" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="1"/>
+        <path d="M100 36V148M68 92l64 0" stroke="#7fdcf2" stroke-opacity=".35" stroke-width=".8"/>
+      </svg>
+      <div class="core-bloom"></div>
+      <div class="core-glint"></div>
+    </div>
+
+    <div class="status-line" aria-live="polite"><span class="state-dot"></span><span id="core-label">DELTA IS IDLE</span></div>
+    <canvas id="wave" width="480" height="64" aria-hidden="true"></canvas>
+
+    <div class="tray" id="tray" aria-live="assertive"></div>
+
+    <form class="cmd" id="cmd" autocomplete="off">
+      <button type="button" class="mic" id="mic" aria-label="Voice input"></button>
+      <div class="cmd-box">
+        <span class="cmd-play" aria-hidden="true"></span>
+        <input id="inp" type="text" maxlength="4000" placeholder="Talk to Delta…" aria-label="Talk to Delta">
+        <kbd class="kbd" aria-hidden="true">Ctrl K</kbd>
+      </div>
+      <button type="submit" class="send" id="send" aria-label="Send"></button>
+    </form>
+
+    <div class="qa" id="qa" role="group" aria-label="Quick actions"></div>
+  </main>
+
+  <!-- ============ right zone ============ -->
+  <aside class="zone-right" aria-label="System">
+    <div class="topbar" id="topbar">
+      <button class="tb" id="b-chat" aria-label="Open conversation" title="Conversation"></button>
+      <button class="tb" id="b-ctl" aria-label="Controls (volume, brightness)" title="Controls"></button>
+      <div class="clock" aria-live="off"><b id="clock">--:--</b><span id="date">&nbsp;</span></div>
+      <button class="tb pwr" id="b-kill" aria-label="Kill switch" aria-pressed="false" title="Kill switch"></button>
+    </div>
+
+    <section class="panel monitor" aria-labelledby="h-mon">
+      <h2 class="ph" id="h-mon">System monitor <em id="mon-live">live</em></h2>
+      <div class="gauges" id="gauges"></div>
+      <div class="spark" id="spark"></div>
+      <div class="duo">
+        <div class="mini"><h3>Network</h3><div id="net"></div></div>
+        <div class="mini"><h3>Top processes</h3><ul id="procs"></ul></div>
+      </div>
+    </section>
+
+    <section class="panel mods" aria-labelledby="h-mods">
+      <h2 class="ph" id="h-mods">Active modules</h2>
+      <ul class="rows mod-rows" id="mods"></ul>
+      <button class="pbtn" data-view="modules">MANAGE MODULES</button>
+    </section>
+
+    <section class="panel gatecard" aria-labelledby="h-gate">
+      <div class="gate-txt">
+        <h2 class="ph" id="h-gate">Module: safety_gate</h2>
+        <div class="gate-big" id="gate-big">GATE ONLINE</div>
+        <p id="gate-sub">Every action is checked, asked or blocked, then logged.</p>
+        <label class="sw"><span>Dry-run</span><button type="button" id="dry" role="switch" aria-checked="false" aria-label="Dry-run"></button></label>
+      </div>
+      <svg class="gate-holo" viewBox="0 0 90 90" aria-hidden="true"><defs><linearGradient id="g-holo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bff3ff"/><stop offset="1" stop-color="#2a8fa8" stop-opacity=".2"/></linearGradient></defs>
+        <g filter="url(#glow-s)" fill="none" stroke="url(#g-holo)" stroke-width="1.3"><path d="M45 8 78 24v22c0 20-14 33-33 40C26 79 12 66 12 46V24L45 8Z"/><path d="M45 20 66 31v15c0 13-9 22-21 27-12-5-21-14-21-27V31l21-11Z" opacity=".6"/><path d="M45 30 56 50H34L45 30Z" fill="#7fe3f7" fill-opacity=".25"/></g>
+        <ellipse cx="45" cy="86" rx="26" ry="3" fill="#4fd6f2" opacity=".35"/></svg>
+    </section>
+  </aside>
+
+  <!-- ============ overlays ============ -->
+  <section class="panel view" id="view" role="region" aria-labelledby="view-title" hidden>
+    <header class="view-hd"><h2 id="view-title" tabindex="-1">View</h2><button class="x" id="view-x" aria-label="Close view">×</button></header>
+    <div class="view-body" id="view-body"></div>
+  </section>
+
+  <aside class="panel dock" id="dock" role="dialog" aria-label="Conversation" aria-modal="false" hidden>
+    <header class="view-hd"><h2 tabindex="-1" id="dock-title">Conversation</h2><div><button class="linkbtn" id="dock-clear">Clear</button><button class="x" id="dock-x" aria-label="Close conversation">×</button></div></header>
+    <div class="dock-feed" id="feed"><div class="col" id="col" aria-live="polite"></div></div>
+  </aside>
+</div>
+
+<div class="pop" id="ctl-pop" role="dialog" aria-label="Controls" hidden></div>
+<div class="toasts" id="toasts" aria-live="polite" aria-atomic="false"></div>
+
+<div class="pal-wrap" id="pal" hidden>
+  <div class="pal" role="dialog" aria-modal="true" aria-label="Command palette">
+    <div class="pal-in"><span class="pal-ico" aria-hidden="true"></span><input id="pal-q" type="text" placeholder="Type a command or search…" role="combobox" aria-expanded="true" aria-controls="pal-list" aria-autocomplete="list" autocomplete="off"><kbd class="kbd">Esc</kbd></div>
+    <ul id="pal-list" role="listbox" aria-label="Commands"></ul>
+    <div class="pal-ft"><span>↑↓ navigate</span><span>Enter run</span><span>Actions still go through the safety gate</span></div>
+  </div>
+</div>
+
+<script src="/assets/dashboard.js" defer></script>
+<script src="/assets/vibe.js" defer></script>
+</body>
+</html>

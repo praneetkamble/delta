@@ -1,0 +1,2 @@
+Geist and Geist Mono (c) The Geist Project Authors (Vercel), licensed under the SIL Open Font License 1.1
+(https://openfontlicense.org). The files in this folder are Latin subsets of the variable fonts, bundled so Delta works offline.

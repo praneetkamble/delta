@@ -1,0 +1,49 @@
+# Delta routines (macros). Copy this file to routines.yaml and edit.
+# Each step is either:
+#   - do: "open chrome"            a plain command, exactly as you would type it to Delta
+#   - tool: set_volume             a tool by name, with args:
+#     args: {percent: 30}
+#   - wait: 2                      pause for N seconds (max 30)
+# Every step still goes through the safety gate: a step that needs confirmation will ask you
+# (and is NOT run unattended). Say the routine's name ("work mode") or "run routine work mode".
+# Optional schedule: "daily 08:30" | "weekdays 09:00" | "weekly mon 18:00"
+#   (runs once per day, only within 2 hours after the scheduled time, and only while Delta is running)
+
+routines:
+  work mode:
+    description: Open the work apps and set a comfortable volume
+    triggers: [start work, get to work]
+    steps:
+      - do: open vs code
+      - do: open chrome
+      - do: open spotify
+      - tool: set_volume
+        args: {percent: 30}
+      - do: daily briefing
+
+  focus mode:
+    description: Mute notifications' noise and start a 25-minute focus timer
+    triggers: [deep work, pomodoro]
+    steps:
+      - do: mute
+      - do: set a 25 minute timer
+      - tool: add_note
+        args: {text: "Started a focus block"}
+
+  morning briefing:
+    description: Read out today's plan when you start the PC
+    schedule: "weekdays 09:00"
+    steps:
+      - do: daily briefing
+
+  tidy downloads:
+    description: Sort the Downloads folder (asks you to approve the plan first)
+    steps:
+      - do: organize downloads
+
+  shutdown time:
+    description: End-of-day wind down (the shutdown itself always asks you)
+    triggers: [end of day, wrap up]
+    steps:
+      - do: list todos
+      - do: shut down

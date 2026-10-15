@@ -1,0 +1,3 @@
+-r requirements.txt
+pytest>=8.0
+playwright>=1.40   # only for scripts/shoot_ui.py (screenshots)
