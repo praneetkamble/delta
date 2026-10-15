@@ -4,12 +4,29 @@
 "what's eating my CPU?") and Delta does it, and **it asks you before anything risky**. It runs only on your own computer, works fully
 offline with built-in commands, and can optionally use an AI model (local or cloud) for free-form requests.
 
+![Python](https://img.shields.io/badge/python-3.10%2B-3776AB?logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-local%20web%20UI-009688?logo=fastapi&logoColor=white)
+![Platform](https://img.shields.io/badge/target-Windows-0078D4)
+![Tests](https://img.shields.io/badge/tests-693%20passing-2ea44f)
+![Safety](https://img.shields.io/badge/safety-asks%20before%20risky%20actions-b3261e)
+
+![Delta dashboard demo (demo mode: simulated values from the mock adapter)](docs/delta-demo.gif)
+
+### Quick start
+
+```powershell
+# Windows, Python 3.10+ on PATH: unzip or clone the repo, then in its folder:
+powershell -ExecutionPolicy Bypass -File install.ps1
+run.bat                                        # opens the dashboard at http://127.0.0.1:8765/?token=...
+.venv\Scripts\python.exe -m delta selftest     # first-run check of each Windows capability
+```
+
+Full steps, options and troubleshooting are in [Install on Windows](#install-on-windows-about-10-minutes).
+
 ![Delta OS dashboard (demo mode: the mock adapter's simulated values)](docs/dashboard-desktop.png)
 
 > **Status: v0.1, built and tested on Linux with a mock adapter, NOT yet run on a real Windows PC.**
 > See [What was tested, and what was not](#what-was-tested-and-what-was-not). Please read it before relying on Delta.
->
-> **The GitHub repository `github.com/praneetkamble/delta` has not been created yet.** Nothing here has been pushed or published.
 
 ---
 
